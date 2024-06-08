@@ -153,6 +153,78 @@ public class PencariRuteKabelSeratOptik
        return input != null && input.matches("[A-Z]+");
     }
 
-    
+    public static void main(String[] args) 
+    {
+        Graph graph = new Graph();
+        Scanner sc = new Scanner(System.in);
+
+        double[] jarakTotalJaringan = new double[999];
+        int indeksJaringan = 0;
+
+        while (true) 
+        {
+            int inputJumlahKota = sc.nextInt();
+            sc.nextLine();
+
+            if (inputJumlahKota == 0) 
+            {
+                break;
+            } 
+            else 
+            {
+                if (inputJumlahKota < 1 || inputJumlahKota > 1000) 
+                {
+                    System.out.println("Jumlah kasus uji harus berada di rentang 1 - 1000 kota");
+                } 
+                else 
+                {
+                    int i = 0;
+                    while (i < inputJumlahKota) 
+                    {
+                        String input1 = sc.nextLine();
+                        String[] subInput1 = input1.split("\\s+");
+
+                        String namaKota = subInput1[0];
+                        int inputJumlahRouter = Integer.parseInt(subInput1[1]);
+                        boolean namaKotaKapital = isUppercase(namaKota);
+                        if ((!namaKotaKapital || namaKota.length() > 15) && (inputJumlahRouter < 1 || inputJumlahRouter > 50))
+                        {
+                          System.out.println("Nama Kota dan Kandidat Lokasi Router Melebihi Batas Maksimal");
+                        }
+                        else if (!namaKotaKapital || namaKota.length() > 15)
+                        {
+                          System.out.println("Nama Kota Harus Kapital dan Maksimal 15 Huruf");
+                        }
+                        else if (inputJumlahRouter < 1 || inputJumlahRouter > 50) 
+                        {
+                          System.out.println("Jumlah kandidat lokasi router harus berada di rentang 1 - 50");
+                        } 
+                        else
+                        {
+                          i++;
+                          Vertex kota = new Vertex(namaKota);
+                          graph.tambahVertex(kota);
+                          
+                          int j = 0;
+                          while (j < inputJumlahRouter) 
+                          {
+                              int x = sc.nextInt();
+                              int y = sc.nextInt();
+                                  
+                              if ((x >= -10000 && x <= 10000 ) && (y >= -10000 && y <= 10000))
+                              {
+                                kota.tambahLokasiRouter(x, y);
+                                j++;
+                              }
+                              else
+                              {
+                                System.out.println("Koordinat (x, y) Harus Berada di Rentang (-10000 <= x, y <= 10000)");
+                              }
+                          }
+                          sc.nextLine();                               
+                        }
+                    }
+
+                    
     
 }

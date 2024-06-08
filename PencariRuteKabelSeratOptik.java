@@ -123,5 +123,36 @@ public class PencariRuteKabelSeratOptik
         }
     }
 
+    public static double hitungJarak(int x1, int y1, int x2, int y2) 
+    {
+        return Math.sqrt(Math.pow((double)x2 - (double)x1, 2) + Math.pow((double)y2 - (double)y1, 2));
+    }
+
+    public static double hitungJarakTerdekat(Vertex kota1, Vertex kota2) 
+    {
+        int[][] lokasiRouter1 = kota1.ambilLokasiRouter();
+        int[][] lokasiRouter2 = kota2.ambilLokasiRouter();
+        double jarakMin = Double.MAX_VALUE;
+
+        for (int i = 0; i < kota1.ambilJumlahRouter(); i++) 
+        {
+            for (int j = 0; j < kota2.ambilJumlahRouter(); j++) 
+            {
+                double jarak = hitungJarak(lokasiRouter1[i][0], lokasiRouter1[i][1], lokasiRouter2[j][0], lokasiRouter2[j][1]);
+                if (jarak < jarakMin) 
+                {
+                    jarakMin = jarak;
+                }
+            }
+        }
+        return jarakMin;
+    }
+    
+    public static boolean isUppercase(String input)
+    {
+       return input != null && input.matches("[A-Z]+");
+    }
+
+    
     
 }

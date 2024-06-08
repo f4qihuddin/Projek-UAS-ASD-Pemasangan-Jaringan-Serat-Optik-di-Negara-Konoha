@@ -8,6 +8,8 @@ package projectuas_asd;
  *
  * @author advan
  */
+import java.util.Scanner;
+
 public class PencariRuteKabelSeratOptik 
 {
     static class Vertex 
@@ -224,7 +226,57 @@ public class PencariRuteKabelSeratOptik
                           sc.nextLine();                               
                         }
                     }
-
                     
-    
+                    int k = 0;
+                    while (k < inputJumlahKota - 1) 
+                    {
+                        String input2 = sc.nextLine();
+                        String[] subInput2 = input2.split("\\s+");
+
+                        String namaKota1 = subInput2[0];
+                        String namaKota2 = subInput2[1];
+                        boolean namaKota1Kapital = isUppercase(namaKota1);
+                        boolean namaKota2Kapital = isUppercase(namaKota2);
+                        
+                        if (!namaKota1Kapital || !namaKota2Kapital)
+                        {
+                            System.out.println("Nama Kota Harus Kapital");
+                        }
+                        else
+                        {
+                            Vertex kota1 = graph.ambilVertex(namaKota1);
+                            Vertex kota2 = graph.ambilVertex(namaKota2);
+                            if (kota1 != null || kota2 != null)
+                            {
+                              graph.tambahEdge(kota1, kota2);
+                            }
+                            k++;
+                        }
+                    }
+
+                    double jarakTotal = 0;
+                    for (int l = 0; l < inputJumlahKota - 1; l++) 
+                    {
+                        if (graph.ambilEdge(l) != null)
+                        {
+                          Vertex kota1 = graph.ambilEdge(l).ambilV1();
+                          Vertex kota2 = graph.ambilEdge(l).ambilV2();
+                          jarakTotal += hitungJarakTerdekat(kota1, kota2);
+                        }
+                        
+                    }
+                    jarakTotalJaringan[indeksJaringan] = jarakTotal;
+                    indeksJaringan++;
+                }
+            }
+        }
+
+        for (int i = 0; i < jarakTotalJaringan.length; i++) 
+        {
+            if (jarakTotalJaringan[i] != 0) 
+            {
+                System.out.printf("%.1f%n", jarakTotalJaringan[i]);
+            }
+        }
+    }
 }
